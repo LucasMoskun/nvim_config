@@ -28,7 +28,11 @@ set shortmess+=c
 set colorcolumn=80
 highlight Colorcolumn ctermbg=0 guibg=lightgrey
 
-"inoremap { {<CR><BS>}<Esc>ko
+inoremap { {<CR><BS>}<Esc>ko
+
+"on windows, for telescope to work install:
+"ripgrep: https://github.com/BurntSushi/ripgrep
+"fd https://github.com/sharkdp/fd#installation
 
 call plug#begin('~/.vim/plugged')
 
@@ -37,19 +41,13 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim', { 'do': 'make'}
 Plug 'gruvbox-community/gruvbox'
-Plug 'sheerun/vim-polyglot'
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-lockfile'}
+"Plug 'sheerun/vim-polyglot'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'dense-analysis/ale'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-Plug 'jiangmiao/auto-pairs'
-Plug 'yuezk/vim-js'
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'maxmellon/vim-jsx-pretty'
-
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier']
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 call plug#end()
 
@@ -58,7 +56,7 @@ highlight Normal guibg=none
 
 let mapleader = " "
 
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>
 nnoremap <leader>ps :lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep For > ")})<CR>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 
@@ -107,7 +105,6 @@ augroup omnisharp_commands
 
 
 augroup END
-
 
 
 
