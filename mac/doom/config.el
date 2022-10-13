@@ -3,6 +3,9 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
+;; stop from continuing comments on new line after comment
+(advice-remove 'newline-and-indent #'+default--newline-indent-and-continue-comments-a)
+
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
